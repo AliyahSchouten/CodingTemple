@@ -1,0 +1,78 @@
+---
+title: "Stats in R Assignment"
+author: "Alex Lucchesi"
+date: "2023/05/30"
+output: html_document
+---
+
+## Assignment
+
+For today's assignment, you will be given a blank notebook and a link to the [Call of Duty Dataset](https://www.kaggle.com/datasets/beridzeg45/call-of-duty-reviews) You will need to fill out the notebook and create your own code chunks to run code. Remember that we use this code without any quotation marks to create a code chunk: '`{r} '` \### Your Goal:
+
+To receive credit for today's assignment, you will need to:
+
+-   Import the dataset
+
+```{r}
+data <- read.csv("C:\\Users\\ALIYA\\OneDrive\\Documents\\Coding_Temple\\Week 6\\Call of Duty Reviews.csv")
+
+```
+
+-   Load the dataset into a tibble
+
+```{r}
+# Load the tidyverse package for data manipulation
+library(tidyverse)
+
+# Read the CSV file into a tibble
+my_tibble <- read_csv("C:\\Users\\ALIYA\\OneDrive\\Documents\\Coding_Temple\\Week 6\\Call of Duty Reviews.csv"))
+```
+
+-   Mutate a new column
+
+```{r}
+# Load the dplyr package
+library(dplyr)
+
+# Assuming you have a tibble named my_tibble
+my_tibble <- my_tibble %>%
+  mutate(Combined_Column = paste("Game Title:", `Game Title`, "Platform:", Platform, "Release Year:", `Release Year`, "Publisher:", Publisher, "Metascore:", Metascore, "Critic Reviews:", `Critic Reviews`, "User Reviews:", `User Reviews`, "Critic Compound Score:", `Critic Compound Score`, "User Compound Score:", `User Compound Score`, sep = " "))
+
+```
+
+-   Create a hypothesis regarding your data and communicate that hypothesis in a scientific method.
+
+    ```{r}
+    correlation_result <- cor.test(my_tibble$Metascore, my_tibble$`User Reviews`, method = "pearson")
+    # Correlation coefficient
+    correlation_coefficient <- correlation_result$estimate
+
+    # P-value
+    p_value <- correlation_result$p.value
+
+    ```
+
+-   Clean the data
+
+```{r}
+library(ggplot2)
+# Create a scatter plot of Metascore vs. User Reviews
+ggplot(my_tibble, aes(x = Metascore, y = `User Reviews`)) +
+  geom_point() +
+  labs(
+    x = "Metascore",
+    y = "User Reviews",
+    title = "Scatter Plot of Metascore vs. User Reviews"
+  )
+# Create a histogram and density plot for Metascores
+ggplot(my_tibble, aes(x = Metascore)) +
+  geom_histogram(binwidth = 5, fill = "blue", color = "black") +
+  geom_density(alpha = 0.5, fill = "red") +
+  labs(
+    x = "Metascore",
+    y = "Frequency/Density",
+    title = "Distribution of Metascores"
+  )
+
+
+```
